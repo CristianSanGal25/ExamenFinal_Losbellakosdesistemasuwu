@@ -47,6 +47,7 @@ namespace ef_02
 
 
 
+
         public static void productos()
         {
             string opcion;
@@ -113,12 +114,12 @@ namespace ef_02
                             Console.WriteLine("Presione Enter para intentar de nuevo...");
                             Console.ReadKey();
                             valido = false;
-                        break;
+                            break;
                         }
                     }
                 } while (!valido);
 
-                // ====== NOMBRE (único) ======
+                // ====== NOMBRE (único, solo letras) ======
                 string nombre;
                 do
                 {
@@ -147,6 +148,30 @@ namespace ef_02
                         continue;
                     }
 
+                    // Validar que solo contenga letras
+                    bool tieneNumero = false;
+                    for (int i = 0; i < nombre.Length; i++)
+                    {
+                        if (nombre[i] >= '0' && nombre[i] <= '9')
+                        {
+                            tieneNumero = true;
+                            break;
+                        }
+                    }
+
+                    if (tieneNumero)
+                    {
+                        Console.SetCursorPosition(5, 10);
+                        Console.WriteLine("Error: El nombre solo debe contener letras");
+                        Console.SetCursorPosition(5, 11);
+                        Console.WriteLine("Presione Enter para intentar de nuevo...");
+                        Console.ReadKey();
+                        valido = false;
+                        continue;
+                    }
+
+                    if (!valido) continue;
+
                     // Validar que no exista (sin importar mayúsculas/minúsculas)
                     for (int i = 0; i < totalProductos; i++)
                     {
@@ -163,19 +188,58 @@ namespace ef_02
                     }
                 } while (!valido);
 
-                // ====== CATEGORÍA ======
-                for (int y = 10; y < 29; y++)
+                // ====== CATEGORÍA (solo letras) ======
+                string categoria;
+                do
                 {
-                    Console.SetCursorPosition(1, y);
-                    Console.Write(new string(' ', 101));
-                }
-                Console.SetCursorPosition(5, 8);
-                Console.Write("Código (11 digitos): " + codigo);
-                Console.SetCursorPosition(5, 9);
-                Console.Write("Nombre: " + nombre);
-                Console.SetCursorPosition(5, 10);
-                Console.Write("Categoría: ");
-                string categoria = Console.ReadLine();
+                    for (int y = 10; y < 29; y++)
+                    {
+                        Console.SetCursorPosition(1, y);
+                        Console.Write(new string(' ', 101));
+                    }
+                    Console.SetCursorPosition(5, 8);
+                    Console.Write("Código (11 digitos): " + codigo);
+                    Console.SetCursorPosition(5, 9);
+                    Console.Write("Nombre: " + nombre);
+                    Console.SetCursorPosition(5, 10);
+                    Console.Write("Categoría: ");
+                    categoria = Console.ReadLine();
+                    valido = true;
+
+                    // Validar que no esté vacío
+                    if (categoria.Length == 0)
+                    {
+                        Console.SetCursorPosition(5, 11);
+                        Console.WriteLine("Error: La categoría no puede estar vacía");
+                        Console.SetCursorPosition(5, 12);
+                        Console.WriteLine("Presione Enter para intentar de nuevo...");
+                        Console.ReadKey();
+                        valido = false;
+                        continue;
+                    }
+
+                    // Validar que solo contenga letras
+                    bool tieneNumero = false;
+                    for (int i = 0; i < categoria.Length; i++)
+                    {
+                        if (categoria[i] >= '0' && categoria[i] <= '9')
+                        {
+                            tieneNumero = true;
+                            break;
+                        }
+                    }
+
+                    if (tieneNumero)
+                    {
+                        Console.SetCursorPosition(5, 11);
+                        Console.WriteLine("Error: La categoría solo debe contener letras");
+                        Console.SetCursorPosition(5, 12);
+                        Console.WriteLine("Presione Enter para intentar de nuevo...");
+                        Console.ReadKey();
+                        valido = false;
+                        continue;
+                    }
+                } while (!valido);
 
                 // ====== STOCK ======
                 int stock = 0;
@@ -274,7 +338,7 @@ namespace ef_02
                     int contadorPuntos = 0;
                     for (int i = 0; i < inputPrecio.Length; i++)
                     {
-                        if (inputPrecio[i] == '.' || inputPrecio[i] == ',')
+                        if (inputPrecio[i] == '.')
                         {
                             contadorPuntos++;
                             if (contadorPuntos > 1)
@@ -303,8 +367,6 @@ namespace ef_02
                     // Si es válido, convertir a número y validar que sea mayor a 0
                     if (valido)
                     {
-                        // Reemplazar coma por punto para la conversión
-                        inputPrecio = inputPrecio.Replace(',', '.');
                         precio = double.Parse(inputPrecio);
 
                         if (precio <= 0)
@@ -343,7 +405,6 @@ namespace ef_02
 
             } while (opcion == "s");
         }
-
 
         public static int clientes()
         {
@@ -1658,81 +1719,373 @@ namespace ef_02
             // Verificar si hay proveedores registrados
             if (contadorProveedores == 0)
             {
+                for (int y = 5; y < 29; y++)
+                {
+                    Console.SetCursorPosition(1, y);
+                    Console.Write(new string(' ', 101));
+                }
                 Console.SetCursorPosition(5, 6);
                 Console.Write("Actualmente no hay proveedores registrados");
+                Console.SetCursorPosition(5, 7);
+                Console.Write("Presione Enter para volver al menú...");
                 Console.ReadKey();
                 return;
             }
-            else
+
+            bool continuar = true;
+            while (continuar)
             {
-                bool codigoValido = false;
-
-                while (!codigoValido)
+                // Limpiar la zona interna
+                for (int y = 5; y < 29; y++)
                 {
-                    // Limpiar la zona interna
-                    for (int y = 5; y < 29; y++)
-                    {
-                        Console.SetCursorPosition(1, y);
-                        Console.Write(new string(' ', 101));
-                    }
+                    Console.SetCursorPosition(1, y);
+                    Console.Write(new string(' ', 101));
+                }
 
-                    Console.SetCursorPosition(7, 6);
-                    Console.Write("LISTA DE PROVEEDORES");
-                    Console.SetCursorPosition(5, 7);
-                    Console.Write("Ingrese el CODIGO del proveedor: ");
-                    string codigoProveedor = Console.ReadLine();
+                Console.SetCursorPosition(7, 6);
+                Console.Write("LISTA DE PROVEEDORES");
+                Console.SetCursorPosition(5, 7);
+                Console.Write("Ingrese el CÓDIGO del proveedor: ");
+                string codigoProveedor = Console.ReadLine();
 
-                    // Validar que no esté vacío
-                    if (codigoProveedor.Length == 0)
-                    {
-                        Console.SetCursorPosition(5, 8);
-                        Console.WriteLine("El código no puede estar vacío");
-                        Console.ReadKey();
-                        continue;
-                    }
+                // Validar que no esté vacío
+                if (codigoProveedor.Length == 0)
+                {
+                    Console.SetCursorPosition(5, 8);
+                    Console.WriteLine("Error: El código no puede estar vacío");
+                    Console.SetCursorPosition(5, 9);
+                    Console.WriteLine("Presione Enter para intentar de nuevo...");
+                    Console.ReadKey();
+                    continue;
+                }
 
-                    // Buscar el proveedor por CÓDIGO
-                    for (int i = 0; i < contadorProveedores; i++)
+                // Buscar el proveedor por CÓDIGO
+                bool encontrado = false;
+                for (int i = 0; i < contadorProveedores; i++)
+                {
+                    if (codigo_proveedor[i] == codigoProveedor)
                     {
-                        if (codigo_proveedor[i] == codigoProveedor)
+                        encontrado = true;
+
+                        // Limpiar y mostrar información del proveedor
+                        for (int y = 5; y < 29; y++)
                         {
-                            codigoValido = true;
-
-                            // Mostrar información del proveedor
-                            Console.SetCursorPosition(5, 9);
-                            Console.Write($"Proveedor {i + 1}:");
-                            Console.SetCursorPosition(5, 10);
-                            Console.Write($"Código del proovedor: {codigo_proveedor[i]}");
-                            Console.SetCursorPosition(5, 11);
-                            Console.Write($"Empresa proovedora: {empresa_proveedor[i]}");
-                            Console.SetCursorPosition(5, 12);
-                            Console.Write($"RUC (11 digitos): {ruc_proveedor[i]}");
-                            Console.SetCursorPosition(5, 13);
-                            Console.Write($"Representante: {representante_proveedor[i]}");
-                            Console.SetCursorPosition(5, 14);
-                            Console.Write($"Teléfono (9 digitos): {telefono_proveedor[i]}");
-                            Console.SetCursorPosition(5, 15);
-                            Console.Write($"Dirección: {direccion_proveedor[i]}");
-                            Console.SetCursorPosition(5, 16);
-                            Console.Write($"Ciudad: {ciudad_proveedor[i]}");
-                            Console.SetCursorPosition(5, 17);
-                            Console.Write("Presione una tecla para continuar...");
-                            Console.ReadKey();
-                            break;
+                            Console.SetCursorPosition(1, y);
+                            Console.Write(new string(' ', 101));
                         }
-                    }
 
-                    // Si no se encontró el código
-                    if (!codigoValido)
-                    {
+                        Console.SetCursorPosition(5, 6);
+                        Console.Write("INFORMACIÓN DEL PROVEEDOR");
                         Console.SetCursorPosition(5, 8);
-                        Console.WriteLine("No se encontró ningún proveedor con ese código");
+                        Console.Write($"Código del proveedor: {codigo_proveedor[i]}");
                         Console.SetCursorPosition(5, 9);
-                        Console.WriteLine("Presione Enter para intentar de nuevo...");
-                        Console.ReadKey();
+                        Console.Write($"Empresa proveedora: {empresa_proveedor[i]}");
+                        Console.SetCursorPosition(5, 10);
+                        Console.Write($"RUC (11 dígitos): {ruc_proveedor[i]}");
+                        Console.SetCursorPosition(5, 11);
+                        Console.Write($"Representante: {representante_proveedor[i]}");
+                        Console.SetCursorPosition(5, 12);
+                        Console.Write($"Teléfono (9 dígitos): {telefono_proveedor[i]}");
+                        Console.SetCursorPosition(5, 13);
+                        Console.Write($"Dirección: {direccion_proveedor[i]}");
+                        Console.SetCursorPosition(5, 14);
+                        Console.Write($"Ciudad: {ciudad_proveedor[i]}");
+
+                        Console.SetCursorPosition(5, 16);
+                        Console.Write("¿Desea buscar otro proveedor? (s/n): ");
+                        string respuesta = Console.ReadLine().ToLower();
+
+                        if (respuesta != "s")
+                        {
+                            continuar = false;
+                        }
+                        break;
+                    }
+                }
+
+                // Si no se encontró el código
+                if (!encontrado)
+                {
+                    Console.SetCursorPosition(5, 8);
+                    Console.WriteLine("Error: No se encontró ningún proveedor con ese código");
+                    Console.SetCursorPosition(5, 9);
+                    Console.Write("¿Desea intentar de nuevo? (s/n): ");
+                    string respuesta = Console.ReadLine().ToLower();
+
+                    if (respuesta != "s")
+                    {
+                        continuar = false;
                     }
                 }
             }
+        }
+
+        public static string LeerInputConEscape(int x, int y, int maxLength)
+        {
+            string input = "";
+            Console.SetCursorPosition(x, y);
+
+            while (true)
+            {
+                ConsoleKeyInfo key = Console.ReadKey(true);
+
+                // Si presiona ESCAPE, retornamos null (señal para cancelar)
+                if (key.Key == ConsoleKey.Escape) return null;
+
+                // Si presiona ENTER, terminamos y devolvemos el texto
+                if (key.Key == ConsoleKey.Enter) return input;
+
+                // Manejo de Backspace (Borrar)
+                if (key.Key == ConsoleKey.Backspace)
+                {
+                    if (input.Length > 0)
+                    {
+                        input = input.Substring(0, input.Length - 1);
+                        Console.Write("\b \b");
+                    }
+                }
+                // Escribir caracteres normales
+                else if (!char.IsControl(key.KeyChar) && input.Length < maxLength)
+                {
+                    Console.Write(key.KeyChar);
+                    input += key.KeyChar;
+                }
+            }
+        }
+
+        public static void Boleta()
+        {
+            // Limpiar buffer
+            while (Console.KeyAvailable) Console.ReadKey(true);
+
+            // Forzar fondo negro antes de limpiar para evitar el color plomo
+            Console.BackgroundColor = ConsoleColor.Black;
+
+            // 1. DIBUJAR LA INTERFAZ
+            for (int y = 5; y < 29; y++)
+            {
+                Console.SetCursorPosition(1, y);
+                Console.Write(new string(' ', 101));
+            }
+
+            Console.BackgroundColor = ConsoleColor.Black;
+            for (int y = 8; y <= 25; y++)
+            {
+                Console.SetCursorPosition(10, y);
+                Console.Write(new string(' ', 85));
+            }
+            Console.ResetColor();
+
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+
+            Console.SetCursorPosition(40, 9); Console.Write("BOLETA DE VENTA");
+            Console.SetCursorPosition(12, 11); Console.Write("DNI CLIENTE:");
+            Console.SetCursorPosition(55, 11); Console.Write("NRO BOLETA:");
+            Console.SetCursorPosition(12, 13); Console.Write("CLIENTE:");
+
+            Console.SetCursorPosition(12, 16); Console.Write("CODIGO");
+            Console.SetCursorPosition(25, 16); Console.Write("PRODUCTOS");
+            Console.SetCursorPosition(45, 16); Console.Write("CANTIDAD");
+            Console.SetCursorPosition(60, 16); Console.Write("PRECIO UNI");
+            Console.SetCursorPosition(75, 16); Console.Write("MONTO");
+
+            Console.SetCursorPosition(12, 23); Console.Write("CODIGO VENDEDOR:");
+            Console.SetCursorPosition(55, 23); Console.Write("TOTAL");
+
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.SetCursorPosition(35, 26); Console.Write(" GUARDAR ");
+            Console.SetCursorPosition(50, 26); Console.Write(" CANCELAR ");
+            Console.ResetColor();
+
+            // Dibujar campos vacíos iniciales
+            Console.BackgroundColor = ConsoleColor.Gray;
+            Console.SetCursorPosition(25, 11); Console.Write(new string(' ', 20)); // DNI
+            Console.SetCursorPosition(67, 11); Console.Write(new string(' ', 10)); // Nro Boleta
+            Console.SetCursorPosition(25, 13); Console.Write(new string(' ', 40)); // Cliente
+            Console.SetCursorPosition(29, 23); Console.Write(new string(' ', 15)); // Vendedor
+            Console.SetCursorPosition(62, 23); Console.Write(new string(' ', 15)); // Total
+            Console.ResetColor();
+
+            // ----------------------------------------------------
+            // LOGICA 1: NRO BOLETA (Con Escape)
+            // ----------------------------------------------------
+            string nroBoleta;
+            do
+            {
+                Console.BackgroundColor = ConsoleColor.Gray;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.SetCursorPosition(67, 11); Console.Write("          "); // Limpiar visualmente
+
+                // USAMOS LA NUEVA FUNCIÓN
+                nroBoleta = LeerInputConEscape(67, 11, 6);
+                Console.ResetColor();
+
+                // VERIFICAMOS SI PRESIONÓ ESCAPE
+                if (nroBoleta == null) return; // <--- ESTO TE SACA AL MENÚ ANTERIOR
+
+                if (nroBoleta.Length > 6)
+                {
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.SetCursorPosition(10, 27); Console.Write("Error: Máx 6 dígitos.");
+                    Console.ReadKey();
+                    Console.SetCursorPosition(10, 27); Console.Write(new string(' ', 50));
+                }
+            } while (nroBoleta.Length > 6);
+
+            // ----------------------------------------------------
+            // LOGICA 2: DNI CLIENTE (Con Escape)
+            // ----------------------------------------------------
+            string dniBuscado;
+            int indexCliente = -1;
+            bool clienteEncontrado = false;
+
+            do
+            {
+                Console.BackgroundColor = ConsoleColor.Gray;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.SetCursorPosition(25, 11); Console.Write(new string(' ', 20));
+
+                dniBuscado = LeerInputConEscape(25, 11, 8);
+                Console.ResetColor();
+
+                if (dniBuscado == null) return; // <--- SALIR SI PRESIONA ESCAPE
+
+                for (int i = 0; i < contadorClientes; i++)
+                {
+                    if (dni_cliente[i] == dniBuscado)
+                    {
+                        indexCliente = i;
+                        clienteEncontrado = true;
+                        Console.BackgroundColor = ConsoleColor.Gray;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.SetCursorPosition(25, 13);
+                        Console.Write((nombre_cliente[i] + " " + apellidos_cliente[i]).PadRight(40));
+                        Console.ResetColor();
+                        break;
+                    }
+                }
+                if (!clienteEncontrado)
+                {
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.SetCursorPosition(10, 27); Console.Write("Error: DNI no encontrado.");
+                    Console.ReadKey();
+                    Console.SetCursorPosition(10, 27); Console.Write(new string(' ', 60));
+                }
+            } while (!clienteEncontrado);
+
+            // ----------------------------------------------------
+            // LOGICA 3: PRODUCTO (Con Escape)
+            // ----------------------------------------------------
+            string nombreProd;
+            int indexProd = -1;
+            bool prodEncontrado = false;
+
+            do
+            {
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.SetCursorPosition(25, 18); Console.Write(new string(' ', 15));
+
+                nombreProd = LeerInputConEscape(25, 18, 20);
+
+                if (nombreProd == null) return; // <--- SALIR SI PRESIONA ESCAPE
+
+                for (int i = 0; i < totalProductos; i++)
+                {
+                    if (nombres_producto[i] != null && nombres_producto[i].ToLower() == nombreProd.ToLower())
+                    {
+                        indexProd = i;
+                        prodEncontrado = true;
+                        Console.SetCursorPosition(12, 18); Console.Write(codigos_producto[i]);
+                        Console.SetCursorPosition(60, 18); Console.Write(precios_producto[i].ToString("0.00"));
+                        break;
+                    }
+                }
+                if (!prodEncontrado)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.SetCursorPosition(10, 27); Console.Write("Error: Producto no existe.");
+                    Console.ReadKey();
+                    Console.SetCursorPosition(10, 27); Console.Write(new string(' ', 60));
+                }
+            } while (!prodEncontrado);
+
+            // --- Cantidad ---
+            int cantidad = 0;
+            bool stockSuficiente = false;
+            do
+            {
+                Console.SetCursorPosition(45, 18); Console.Write("    ");
+                string cantTexto = LeerInputConEscape(45, 18, 5);
+
+                if (cantTexto == null) return; // <--- SALIR SI PRESIONA ESCAPE
+
+                if (int.TryParse(cantTexto, out cantidad) && cantidad > 0)
+                {
+                    if (cantidad <= stocks_producto[indexProd]) stockSuficiente = true;
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.SetCursorPosition(10, 27); Console.Write($"Stock insuficiente ({stocks_producto[indexProd]}).");
+                        Console.ReadKey();
+                        Console.SetCursorPosition(10, 27); Console.Write(new string(' ', 60));
+                    }
+                }
+            } while (!stockSuficiente);
+
+            // Cálculos
+            double totalMonto = cantidad * precios_producto[indexProd];
+            Console.SetCursorPosition(75, 18); Console.Write(totalMonto.ToString("0.00"));
+
+            Console.BackgroundColor = ConsoleColor.Gray;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.SetCursorPosition(62, 23); Console.Write((" S/ " + totalMonto.ToString("0.00")).PadRight(15));
+            Console.ResetColor();
+
+            // ----------------------------------------------------
+            // LOGICA 4: VENDEDOR (Con Escape)
+            // ----------------------------------------------------
+            string codVendedor;
+            bool vendedorEncontrado = false;
+            do
+            {
+                Console.BackgroundColor = ConsoleColor.Gray;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.SetCursorPosition(29, 23); Console.Write(new string(' ', 15));
+
+                codVendedor = LeerInputConEscape(29, 23, 11);
+                Console.ResetColor();
+
+                if (codVendedor == null) return; // <--- SALIR SI PRESIONA ESCAPE
+
+                for (int i = 0; i < total; i++)
+                {
+                    if (codigos[i] == codVendedor)
+                    {
+                        vendedorEncontrado = true;
+                        break;
+                    }
+                }
+                if (!vendedorEncontrado)
+                {
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.SetCursorPosition(10, 27); Console.Write("Error: Vendedor no existe.");
+                    Console.ReadKey();
+                    Console.SetCursorPosition(10, 27); Console.Write(new string(' ', 60));
+                }
+            } while (!vendedorEncontrado);
+
+            // FIN
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.SetCursorPosition(10, 27); Console.Write("¡Venta registrada! (Presione tecla)");
+            Console.ReadKey();
+            Console.ResetColor();
         }
     }
 }

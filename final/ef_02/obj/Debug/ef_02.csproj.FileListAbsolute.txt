@@ -38,3 +38,11 @@ C:\Users\JULIO\Desktop\TF_grupoterroncitosuwu\final\ef_02\obj\Debug\ef_02.exe.co
 C:\Users\JULIO\Desktop\TF_grupoterroncitosuwu\final\ef_02\obj\Debug\ef_02.csproj.CoreCompileInputs.cache
 C:\Users\JULIO\Desktop\TF_grupoterroncitosuwu\final\ef_02\obj\Debug\ef_02.exe
 C:\Users\JULIO\Desktop\TF_grupoterroncitosuwu\final\ef_02\obj\Debug\ef_02.pdb
+C:\Users\USUARIO\Desktop\viernes_avance\ExamenFinal_Losbellakosdesistemasuwu\final\ef_02\bin\Debug\ef_02.exe.config
+C:\Users\USUARIO\Desktop\viernes_avance\ExamenFinal_Losbellakosdesistemasuwu\final\ef_02\bin\Debug\ef_02.exe
+C:\Users\USUARIO\Desktop\viernes_avance\ExamenFinal_Losbellakosdesistemasuwu\final\ef_02\bin\Debug\ef_02.pdb
+C:\Users\USUARIO\Desktop\viernes_avance\ExamenFinal_Losbellakosdesistemasuwu\final\ef_02\obj\Debug\ef_02.csproj.AssemblyReference.cache
+C:\Users\USUARIO\Desktop\viernes_avance\ExamenFinal_Losbellakosdesistemasuwu\final\ef_02\obj\Debug\ef_02.exe.config
+C:\Users\USUARIO\Desktop\viernes_avance\ExamenFinal_Losbellakosdesistemasuwu\final\ef_02\obj\Debug\ef_02.csproj.CoreCompileInputs.cache
+C:\Users\USUARIO\Desktop\viernes_avance\ExamenFinal_Losbellakosdesistemasuwu\final\ef_02\obj\Debug\ef_02.exe
+C:\Users\USUARIO\Desktop\viernes_avance\ExamenFinal_Losbellakosdesistemasuwu\final\ef_02\obj\Debug\ef_02.pdb

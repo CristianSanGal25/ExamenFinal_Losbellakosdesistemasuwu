@@ -280,5 +280,78 @@ namespace ef_02
                 }
             }
         }
+
+        public static void SubmenuVentas()
+        {
+            string[] submenu = { "BOLETA", "FACTURA", "GUIA REM", "PROFORMA" };
+            int index = 0;
+            ConsoleKeyInfo key;
+
+            while (true)
+            {
+                LimpiarZonaInterna();
+
+                // Mostrar opciones
+                for (int i = 0; i < submenu.Length; i++)
+                {
+                    Console.SetCursorPosition(10, 6 + i);
+
+                    if (i == index)
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.WriteLine(" " + submenu[i]);
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.WriteLine("  " + submenu[i]);
+                    }
+                }
+
+                key = Console.ReadKey(true);
+
+                if (key.Key == ConsoleKey.Escape)
+                    return;
+
+                if (key.Key == ConsoleKey.DownArrow)
+                    index = (index + 1) % submenu.Length;
+
+                if (key.Key == ConsoleKey.UpArrow)
+                    index = (index - 1 + submenu.Length) % submenu.Length;
+
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    LimpiarZonaInterna();
+                    Console.SetCursorPosition(0, 10);
+
+                    switch (index)
+                    {
+                        case 0:
+                            menu.Boleta(); // <--- AGREGA ESTA LÍNEA
+                            
+                            break;
+
+                        case 1:
+                            Console.SetCursorPosition(10, 10);
+                            Console.WriteLine("FACTURA en desarrollo...");
+                            Console.ReadKey();
+                            break;
+
+                        case 2:
+                            Console.SetCursorPosition(10, 10);
+                            Console.WriteLine("GUÍA REM en desarrollo...");
+                            Console.ReadKey();
+                            break;
+
+                        case 3:
+                            Console.SetCursorPosition(10, 10);
+                            Console.WriteLine("PROFORMA en desarrollo...");
+                            Console.ReadKey();
+                            break;
+                    }
+                }
+            }
+        }
     }
 }

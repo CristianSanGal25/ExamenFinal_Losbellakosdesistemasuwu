@@ -30,19 +30,23 @@ namespace ef_02
                     case 0:
                         Class1.SubmenuRegistrar();
                         break;
-                    case 1:  
-                        
+                    case 1:
+                        Class1.SubmenuVentas();
                         break;
                     case 2:
                         Class1.SubmenuReportes();
                         break;
 
                     case 3:
-
+                        Console.SetCursorPosition(10, 10);
+                        Console.Write("LA OPCION DE MODIFICAR AUN ESTA EN DESARROLLO");
+                        Console.ReadKey();
                         break;
 
                     case 4:
-
+                        Console.SetCursorPosition(10, 10);
+                        Console.Write("LA OPCION DE AYUDA AUN ESTA EN DESARROLLO");
+                        Console.ReadKey();
                         break;
 
                     case 5:
