@@ -862,12 +862,11 @@ namespace ef_02
                     return contadorProveedores;
                 }
 
-                // ====== CÓDIGO DEL PROVEEDOR (único) ======
+                // ====== CÓDIGO DEL PROVEEDOR (alfanumérico, único, 11 caracteres) ======
                 string codigo;
                 bool valido;
                 do
                 {
-                    // Limpiar la zona interna
                     for (int y = 5; y < 29; y++)
                     {
                         Console.SetCursorPosition(1, y);
@@ -877,7 +876,7 @@ namespace ef_02
                     Console.SetCursorPosition(5, 6);
                     Console.Write("REGISTRAR PROVEEDOR");
                     Console.SetCursorPosition(5, 8);
-                    Console.Write("Codigo del proovedor: ");
+                    Console.Write("Código del proveedor (11 caracteres): ");
                     codigo = Console.ReadLine();
                     valido = true;
 
@@ -886,6 +885,18 @@ namespace ef_02
                     {
                         Console.SetCursorPosition(5, 9);
                         Console.WriteLine("Error: El código no puede estar vacío");
+                        Console.SetCursorPosition(5, 10);
+                        Console.WriteLine("Presione Enter para intentar de nuevo...");
+                        Console.ReadKey();
+                        valido = false;
+                        continue;
+                    }
+
+                    // Validar que tenga exactamente 11 caracteres
+                    if (codigo.Length != 11)
+                    {
+                        Console.SetCursorPosition(5, 9);
+                        Console.WriteLine("Error: El código debe tener exactamente 11 caracteres");
                         Console.SetCursorPosition(5, 10);
                         Console.WriteLine("Presione Enter para intentar de nuevo...");
                         Console.ReadKey();
@@ -909,12 +920,11 @@ namespace ef_02
                     }
                 } while (!valido);
 
-                // ====== EMPRESA PROVEEDORA ======
+                // ====== EMPRESA PROVEEDORA (solo letras) ======
                 string empresa;
                 do
                 {
-                    // Limpiar desde la línea 9 hacia abajo
-                    for (int y = 9; y < 29; y++)
+                    for (int y = 5; y < 29; y++)
                     {
                         Console.SetCursorPosition(1, y);
                         Console.Write(new string(' ', 101));
@@ -923,7 +933,7 @@ namespace ef_02
                     Console.SetCursorPosition(5, 6);
                     Console.Write("REGISTRAR PROVEEDOR");
                     Console.SetCursorPosition(5, 8);
-                    Console.Write("Codigo del proovedor: " + codigo);
+                    Console.Write("Código del proveedor (11 caracteres): " + codigo);
                     Console.SetCursorPosition(5, 9);
                     Console.Write("Empresa proveedora: ");
                     empresa = Console.ReadLine();
@@ -938,6 +948,18 @@ namespace ef_02
                         Console.WriteLine("Presione Enter para intentar de nuevo...");
                         Console.ReadKey();
                         valido = false;
+                        continue;
+                    }
+
+                    // Validar que solo contenga letras y espacios
+                    if (!SoloLetras(empresa))
+                    {
+                        Console.SetCursorPosition(5, 10);
+                        Console.WriteLine("Error: La empresa solo debe contener letras");
+                        Console.SetCursorPosition(5, 11);
+                        Console.WriteLine("Presione Enter para intentar de nuevo...");
+                        Console.ReadKey();
+                        valido = false;
                     }
                 } while (!valido);
 
@@ -945,8 +967,7 @@ namespace ef_02
                 string ruc;
                 do
                 {
-                    // Limpiar desde la línea 10 hacia abajo
-                    for (int y = 10; y < 29; y++)
+                    for (int y = 5; y < 29; y++)
                     {
                         Console.SetCursorPosition(1, y);
                         Console.Write(new string(' ', 101));
@@ -955,9 +976,9 @@ namespace ef_02
                     Console.SetCursorPosition(5, 6);
                     Console.Write("REGISTRAR PROVEEDOR");
                     Console.SetCursorPosition(5, 8);
-                    Console.Write("Codigo del proovedor: " + codigo);
+                    Console.Write("Código del proveedor (11 caracteres): " + codigo);
                     Console.SetCursorPosition(5, 9);
-                    Console.Write("Empresa proovedora: " + empresa);
+                    Console.Write("Empresa proveedora: " + empresa);
                     Console.SetCursorPosition(5, 10);
                     Console.Write("RUC (11 dígitos): ");
                     ruc = Console.ReadLine();
@@ -1019,8 +1040,7 @@ namespace ef_02
                 string representante;
                 do
                 {
-                    // Limpiar TODA la zona interna desde la línea 6
-                    for (int y = 6; y < 29; y++)
+                    for (int y = 5; y < 29; y++)
                     {
                         Console.SetCursorPosition(1, y);
                         Console.Write(new string(' ', 101));
@@ -1029,9 +1049,9 @@ namespace ef_02
                     Console.SetCursorPosition(5, 6);
                     Console.Write("REGISTRAR PROVEEDOR");
                     Console.SetCursorPosition(5, 8);
-                    Console.Write("Codigo del proovedor: " + codigo);
+                    Console.Write("Código del proveedor (11 caracteres): " + codigo);
                     Console.SetCursorPosition(5, 9);
-                    Console.Write("Empresa proovedora: " + empresa);
+                    Console.Write("Empresa proveedora: " + empresa);
                     Console.SetCursorPosition(5, 10);
                     Console.Write("RUC (11 dígitos): " + ruc);
                     Console.SetCursorPosition(5, 11);
@@ -1049,12 +1069,11 @@ namespace ef_02
                     }
                 } while (!valido);
 
-                // ====== TELÉFONO (9 dígitos) ======
+                // ====== TELÉFONO (9 dígitos, solo números) ======
                 string telefono;
                 do
                 {
-                    // Limpiar TODA la zona interna desde la línea 6
-                    for (int y = 6; y < 29; y++)
+                    for (int y = 5; y < 29; y++)
                     {
                         Console.SetCursorPosition(1, y);
                         Console.Write(new string(' ', 101));
@@ -1063,9 +1082,9 @@ namespace ef_02
                     Console.SetCursorPosition(5, 6);
                     Console.Write("REGISTRAR PROVEEDOR");
                     Console.SetCursorPosition(5, 8);
-                    Console.Write("Codigo del proovedor: " + codigo);
+                    Console.Write("Código del proveedor (11 caracteres): " + codigo);
                     Console.SetCursorPosition(5, 9);
-                    Console.Write("Empresa proovedora: " + empresa);
+                    Console.Write("Empresa proveedora: " + empresa);
                     Console.SetCursorPosition(5, 10);
                     Console.Write("RUC (11 dígitos): " + ruc);
                     Console.SetCursorPosition(5, 11);
@@ -1087,7 +1106,7 @@ namespace ef_02
                         continue;
                     }
 
-                    // Validar que solo sean números
+                    // Validar que solo sean números (IMPORTANTE)
                     if (!SoloNumeros(telefono))
                     {
                         Console.SetCursorPosition(5, 13);
@@ -1115,8 +1134,7 @@ namespace ef_02
                 string direccion;
                 do
                 {
-                    // Limpiar TODA la zona interna desde la línea 6
-                    for (int y = 6; y < 29; y++)
+                    for (int y = 5; y < 29; y++)
                     {
                         Console.SetCursorPosition(1, y);
                         Console.Write(new string(' ', 101));
@@ -1125,9 +1143,9 @@ namespace ef_02
                     Console.SetCursorPosition(5, 6);
                     Console.Write("REGISTRAR PROVEEDOR");
                     Console.SetCursorPosition(5, 8);
-                    Console.Write("Codigo del proovedor: " + codigo);
+                    Console.Write("Código del proveedor (11 caracteres): " + codigo);
                     Console.SetCursorPosition(5, 9);
-                    Console.Write("Empresa proovedora: " + empresa);
+                    Console.Write("Empresa proveedora: " + empresa);
                     Console.SetCursorPosition(5, 10);
                     Console.Write("RUC (11 dígitos): " + ruc);
                     Console.SetCursorPosition(5, 11);
@@ -1155,8 +1173,7 @@ namespace ef_02
                 string ciudad;
                 do
                 {
-                    // Limpiar TODA la zona interna desde la línea 6
-                    for (int y = 6; y < 29; y++)
+                    for (int y = 5; y < 29; y++)
                     {
                         Console.SetCursorPosition(1, y);
                         Console.Write(new string(' ', 101));
@@ -1165,9 +1182,9 @@ namespace ef_02
                     Console.SetCursorPosition(5, 6);
                     Console.Write("REGISTRAR PROVEEDOR");
                     Console.SetCursorPosition(5, 8);
-                    Console.Write("Codigo del proovedor: " + codigo);
+                    Console.Write("Código del proveedor (11 caracteres): " + codigo);
                     Console.SetCursorPosition(5, 9);
-                    Console.Write("Empresa proovedora: " + empresa);
+                    Console.Write("Empresa proveedora: " + empresa);
                     Console.SetCursorPosition(5, 10);
                     Console.Write("RUC (11 dígitos): " + ruc);
                     Console.SetCursorPosition(5, 11);
@@ -1201,16 +1218,22 @@ namespace ef_02
                 ciudad_proveedor[contadorProveedores] = ciudad;
                 contadorProveedores++;
 
-                // Mensaje de confirmación
-                Console.SetCursorPosition(5, 16);
+                // Limpiar y mostrar mensaje final
+                for (int y = 5; y < 29; y++)
+                {
+                    Console.SetCursorPosition(1, y);
+                    Console.Write(new string(' ', 101));
+                }
+
+                Console.SetCursorPosition(5, 10);
                 Console.Write("¡Proveedor registrado correctamente!");
-                Console.SetCursorPosition(5, 17);
+                Console.SetCursorPosition(5, 11);
                 Console.Write("¿Desea registrar otro proveedor? (s/n): ");
                 opcion = Console.ReadLine().ToLower();
 
                 if (opcion != "s")
                 {
-                    Console.SetCursorPosition(5, 18);
+                    Console.SetCursorPosition(5, 12);
                     Console.Write("Presione Enter para volver al menú principal...");
                     Console.ReadKey();
                 }
@@ -1566,7 +1589,6 @@ namespace ef_02
                     }
                 }           
             }
-            
         }
 
         public static void ListarVendedores(int total)
